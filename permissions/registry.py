@@ -1,5 +1,6 @@
 import inspect
 import logging
+import sys
 from collections import namedtuple
 from functools import wraps
 
@@ -324,9 +325,14 @@ class PermissionsRegistry:
             # This contains the names of all of the view's args
             # (positional and keyword). This is used to find the field
             # value for permissions that operate on a model.
-            view_args_spec = inspect.getargspec(view)
+            if sys.version_info >= (3, 0):
+                view_args_spec = inspect.getfullargspec(view)
+                perm_func_arg_spec = inspect.getfullargspec(perm_func)
+            else:
+                view_args_spec = inspect.getargspec(view)
+                perm_func_arg_spec = inspect.getargspec(perm_func)
+
             view_arg_names = view_args_spec.args
-            perm_func_arg_spec = inspect.getargspec(perm_func)
             perm_func_arg_names = perm_func_arg_spec.args
 
             @wraps(view)
