@@ -7,10 +7,17 @@ with open('VERSION') as version_fp:
     VERSION = version_fp.read().strip()
 
 
-if sys.version_info[:2] < (3, 4):
-    django_version = '1.8'
+# This is used only in development of the django-perms package itself.
+# The idea is to install the newest version of Django that works with
+# the Python version in use. Tox is used to test all supported
+# combinations of Python/Django.
+py_version = sys.version_info[:2]
+if py_version == (2, 7):
+    django_spec = 'django>=1.11,<1.12',
+if py_version == (3, 3):
+    django_spec = 'django>=1.8,<1.9',
 else:
-    django_version = '1.9'
+    django_spec = 'django>=2.0,<2.1',
 
 
 setup(
@@ -30,7 +37,7 @@ setup(
     extras_require={
         'dev': [
             'coverage',
-            'django>={version},<{version}.999'.format(version=django_version),
+            django_spec,
             'flake8',
             'tox',
         ],
