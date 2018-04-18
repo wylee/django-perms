@@ -78,7 +78,7 @@ your project, then you might define some permissions like so:
     def can_view_widget(user, widget):
         if user.is_staff:
             return True
-        if user.is_anonymous():
+        if user.is_anonymous:
             return widget.is_public
         return user == widget.owner
 
@@ -206,7 +206,7 @@ permission like this:
     def can_view_article(user, article):
         if article.is_published:
             return True
-        if user.is_anonymous():
+        if user.is_anonymous:
             return False  # Redirect to login page
         return user == article.owner
 

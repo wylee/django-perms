@@ -3,6 +3,7 @@ import logging
 from collections import namedtuple
 from functools import wraps
 
+import django
 import django.conf
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
@@ -23,6 +24,7 @@ else:
 from .exc import DuplicatePermissionError, NoSuchPermissionError, PermissionsError
 from .meta import PermissionsMeta
 from .templatetags.permissions import register
+from .utils import is_anonymous
 
 
 log = logging.getLogger(__name__)
@@ -231,7 +233,7 @@ class PermissionsRegistry:
         def wrapped_func(user, instance=NO_VALUE):
             if user is None:
                 return False
-            if not allow_anonymous and user.is_anonymous():
+            if not allow_anonymous and is_anonymous(user):
                 return False
             test = lambda: perm_func(user) if instance is NO_VALUE else perm_func(user, instance)
             return (
@@ -344,7 +346,7 @@ class PermissionsRegistry:
                 request = args[request_index]
                 user = request.user
 
-                if not allow_anonymous and user.is_anonymous():
+                if not allow_anonymous and is_anonymous(user):
                     return unauthenticated_handler(request)
 
                 def test():
@@ -394,7 +396,7 @@ class PermissionsRegistry:
 
                 if has_permission:
                     return view(*args, **kwargs)
-                elif user.is_anonymous():
+                elif is_anonymous(user):
                     return unauthenticated_handler(request)
                 else:
                     # Tack on the permission name to the request for
