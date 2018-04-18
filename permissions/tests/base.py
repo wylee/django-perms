@@ -1,3 +1,4 @@
+import django
 from django.test import RequestFactory, TestCase as BaseTestCase
 
 from permissions import PermissionsRegistry as BasePermissionsRegistry
@@ -34,11 +35,18 @@ class User(Model):
     def is_authenticated(self):
         return False
 
+    if django.VERSION >= (1, 10):
+        is_anonymous = property(is_anonymous)
+        is_authenticated = property(is_authenticated)
+
 
 class AnonymousUser(User):
 
     def is_anonymous(self):
         return True
+
+    if django.VERSION >= (1, 10):
+        is_anonymous = property(is_anonymous)
 
 
 class View(object):

@@ -5,7 +5,7 @@ package = permissions
 sdist = dist/$(distribution)-$(version).tar.gz
 upload_path = hrimfaxi:/vol/www/cdn/pypi/dist
 venv = .env
-python_version ?= python3.3
+python_version ?= python3.4
 version = $(shell cat VERSION)
 
 sources = $(shell find . \
@@ -54,7 +54,7 @@ clean-sdist:
 upload: sdist
 	scp $(sdist) $(upload_path)
 upload-to-pypi:
-	python setup.py sdist register upload
+	python setup.py sdist upload
 
 clean: clean-pyc
 clean-all: clean-install clean-pyc clean-sdist tox-clean clean-venv
