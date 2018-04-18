@@ -1,5 +1,9 @@
 # Change Log for django-perms
 
+## 2.2.0 - unreleased
+
+In progress...
+
 ## 2.1.0 - 2018-04-18
 
 - Added nominal support for Python 3.6
