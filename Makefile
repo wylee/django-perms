@@ -5,7 +5,7 @@ package = permissions
 sdist = dist/$(distribution)-$(version).tar.gz
 upload_path = hrimfaxi:/vol/www/cdn/pypi/dist
 venv = .env
-python_version ?= python3.3
+python_version ?= python3.4
 version = $(shell cat VERSION)
 
 sources = $(shell find . \
