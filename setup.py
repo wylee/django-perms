@@ -25,7 +25,7 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     install_requires=[
-        'six>=1.10.0',
+        'six>=1.11.0',
     ],
     extras_require={
         'dev': [
