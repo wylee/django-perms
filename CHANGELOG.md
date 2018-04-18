@@ -1,8 +1,11 @@
 # Change Log for django-perms
 
-## 2.1.0 - unreleased
+## 2.1.0 - 2018-04-18
 
-In progress...
+- Added nominal support for Python 3.6
+- Added nominal support for Django 1.10, 1.11, and 2.0
+- Updated calls to `User.is_anonymous` so that it's called as a method
+  on Django 1.9 and below and as a property on Django 1.10 and up.
 
 ## 2.0.0 - 2017-01-05
 
